@@ -13,6 +13,12 @@
 
 Route::group(['prefix' => '/'], function () {
     Route::get('/', 'HomeController@index')->name('home');
+    Route::group(['prefix' => '/vragen'], function () {
+        Route::get('/', 'QuestionsController@view');
+//        Route::get('/{id}', 'QuestionsController@view');
+        Route::get('/1', 'QuestionsController@view');
+
+    });
 });
 
 Auth::routes();

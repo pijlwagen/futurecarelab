@@ -1,3 +1,4 @@
-body {
+body, html {
     font-family: 'Nunito', sans-serif;
+    background: #E2E7E7 !important
 }
