@@ -36,9 +36,7 @@
 
                 </ul>
 
-                <!-- middle Side Of Navbar -->
-                <ul class="navbar-nav">
-
+                <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/') }}">{{ __('Home') }}</a>
                     </li>
@@ -48,11 +46,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/') }}">{{ __('iets something idc') }}</a>
                     </li>
-
-                </ul>
-
-                <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav ml-auto">
                     <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">
