@@ -11,9 +11,8 @@ class QuestionsController extends Controller
     public function index()
     {
         $questions = Question::where('status', 1)->paginate(15);
-        $recent = Question::latest()->limit(10)->get();
+        $recent = Question::latest()->limit(5)->get();
 
-        dd(Question::all());
         return view('questions.index', [
             'questions' => $questions,
             'recent' => $recent,

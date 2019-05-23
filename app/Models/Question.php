@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
-    protected $table ='questions';
+    protected $table = 'questions';
 
     protected $fillable = ['content', 'status'];
 
@@ -17,11 +17,11 @@ class Question extends Model
 
     public function getAnswers()
     {
-        return $this->hasManyThrough('App\Models\Answer', 'App\Models\QuestionAnswer', 'question_id', 'id', 'id')->get();
+        return $this->hasManyThrough('App\Models\Answer', 'App\Models\QuestionAnswer', 'question_id', 'id', 'id', 'id')->get();
     }
 
     public function getTag()
     {
-        return $this->hasOneThrough('App\Models\Tag', 'App\Models\QuestionTag', 'question_id', 'id', 'id')->first();
+        return $this->hasOneThrough('App\Models\Tag', 'App\Models\QuestionTag', 'tag_id', 'id', 'id', 'id')->first();
     }
 }

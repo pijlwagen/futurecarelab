@@ -13,7 +13,7 @@
                     <h5><span class="badge float-right"
                               style="background-color: {{ $tag->hex }}">{{ $tag->name }}</span></h5>
                 @endif
-                <h3>Vraag #1</h3>
+                <h3>Vraag #{{ $question->id }}</h3>
             </div>
             <div class="card-body">
                 {!! $question->content !!}
