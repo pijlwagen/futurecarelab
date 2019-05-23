@@ -14,10 +14,11 @@
 Route::group(['prefix' => '/'], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::group(['prefix' => '/vragen'], function () {
-        Route::get('/', 'QuestionsController@view');
-//        Route::get('/{id}', 'QuestionsController@view');
-        Route::get('/1', 'QuestionsController@view');
-
+        Route::post('/nieuw', 'QuestionsController@store')->name('question.store');
+        Route::get('/{id}', 'QuestionsController@view')->name('question.view');
+    });
+    Route::group(['prefix' => '/antwoorden'], function () {
+        Route::post('/nieuw/{question}', 'AnswerController@store')->name('answer.store');
     });
 });
 

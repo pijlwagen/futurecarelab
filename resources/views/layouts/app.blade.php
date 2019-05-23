@@ -14,8 +14,8 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
 <div id="app">
@@ -42,10 +42,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/') }}">{{ __('Stel een vraag') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/') }}">{{ __('iets something idc') }}</a>
-                    </li>
                     <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">

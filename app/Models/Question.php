@@ -17,6 +17,11 @@ class Question extends Model
 
     public function getAnswers()
     {
-        return $this->hasManyThrough('App\Models\Answer', 'App\Models\QuestionAnswer', 'id', 'question_id', 'id');
+        return $this->hasManyThrough('App\Models\Answer', 'App\Models\QuestionAnswer', 'question_id', 'id', 'id')->get();
+    }
+
+    public function getTag()
+    {
+        return $this->hasOneThrough('App\Models\Tag', 'App\Models\QuestionTag', 'question_id', 'id', 'id')->first();
     }
 }

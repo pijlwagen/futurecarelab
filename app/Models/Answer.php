@@ -12,11 +12,11 @@ class Answer extends Model
 
     public function getAuthor()
     {
-        return $this->hasOne('App\User', 'id', 'posted_by');
+        return $this->hasOne('App\User', 'id', 'posted_by')->first();
     }
 
     public function getQuestion()
     {
-        return $this->hasOneThrough('App\Models\Question', 'App\Models\QuestionAnswer', 'answer_id', 'question_id', 'id');
+        return $this->hasOneThrough('App\Models\Question', 'App\Models\QuestionAnswer', 'answer_id', 'question_id', 'id')->first();
     }
 }
