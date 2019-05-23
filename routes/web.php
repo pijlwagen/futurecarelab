@@ -14,6 +14,7 @@
 Route::group(['prefix' => '/'], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::group(['prefix' => '/vragen'], function () {
+        Route::get('/', 'QuestionsController@index')->middleware('auth')->name('question');
         Route::post('/nieuw', 'QuestionsController@store')->name('question.store');
         Route::get('/{id}', 'QuestionsController@view')->name('question.view');
     });

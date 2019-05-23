@@ -8,9 +8,16 @@ use Illuminate\Http\Request;
 
 class QuestionsController extends Controller
 {
-    public function show()
+    public function index()
     {
-//        return view('questions.index');
+        $questions = Question::where('status', 1)->paginate(15);
+        $recent = Question::latest()->limit(10)->get();
+
+        dd(Question::all());
+        return view('questions.index', [
+            'questions' => $questions,
+            'recent' => $recent,
+        ]);
     }
 
     public function view(Request $request)
