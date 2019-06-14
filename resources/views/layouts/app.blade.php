@@ -15,11 +15,12 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('fontawesome/css/all.css') }}">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm" style="height: 66px">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'Laravel') }}
@@ -41,7 +42,11 @@
                         <a class="nav-link" href="{{ url('/') }}">{{ __('Home') }}</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ route('question.mine') }}">{{ __('Mijn vragen') }}</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ url('/') }}">{{ __('Stel een vraag') }}</a>
+                    </li>
                     <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">
@@ -53,6 +58,9 @@
                             </li>
                         @endif
                     @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('question') }}">{{ __('Vragen') }}</a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -63,7 +71,7 @@
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                                    {{ __('Uitloggen') }}
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
@@ -79,6 +87,18 @@
     </nav>
 
     <main class="py-4">
+        @foreach(['success', 'info', 'danger', 'warning'] as $status)
+            @if(Session::has($status))
+                <div class="container">
+                    <div class="alert alert-{{ $status }} alert-dismissible fade show" role="alert">
+                        {{ Session::get($status) }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            @endif
+        @endforeach
         @yield('content')
     </main>
 </div>

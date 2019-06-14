@@ -13,12 +13,8 @@ class AnswerController extends Controller
 {
     public function store(Request $request)
     {
-        if (!Auth::check()) {
-            session()->flash('danger', ' U moet ingelogd zijn om deze actie te doen.');
-            return back();
-        }
 
-        $question = Question::find($request->segment(3));
+        $question = Question::find($request->question);
 
         if (!$question) abort(404);
 
@@ -36,7 +32,20 @@ class AnswerController extends Controller
             'answer_id' => $answer->id,
         ]);
 
-        session()->flash('success', 'Vraag is beantwoord.');
+        return back();
+    }
+
+    public function delete(Request $request)
+    {
+        $id = $request->input('id');
+        $answer = Answer::find($id);
+        if (!$answer) abort(404);
+        $relation = $answer->getRawRelation();
+        if ($relation) {
+            $relation->delete();
+        }
+        $answer->delete();
+        session()->flash('success', 'Antwoord is succesvol verwijderd');
         return back();
     }
 }

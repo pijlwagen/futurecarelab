@@ -19,4 +19,9 @@ class Answer extends Model
     {
         return $this->hasOneThrough('App\Models\Question', 'App\Models\QuestionAnswer', 'answer_id', 'question_id', 'id')->first();
     }
+
+    public function getRawRelation()
+    {
+        return $this->hasOne('App\Models\QuestionAnswer', 'answer_id', 'id')->first();
+    }
 }
