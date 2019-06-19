@@ -7,6 +7,7 @@ use App\Models\Question;
 use App\Models\QuestionCategory;
 use App\Models\QuestionTag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 
 class QuestionsController extends Controller
 {
@@ -16,6 +17,7 @@ class QuestionsController extends Controller
         $category = null;
         if ($request->query('categorie')) {
             $category = Category::where('name', $request->query('categorie'))->first();
+            if (!$category) return abort(404);
             $questions = $category->getQuestions(true);
         } else {
             $questions = Question::where('status', 1)->paginate(5);
@@ -31,16 +33,25 @@ class QuestionsController extends Controller
 
     public function myQuestions(Request $request)
     {
-        $questions = Question::where('email', $request->query('email'))->get();
+        $questions = [];
+        $email = $request->query('email');
+
+        if (Cookie::get('email') && !$email) {
+            $email = Cookie::get('email');
+           $questions = Question::where('email', $email)->get();
+        } else {
+            $questions = Question::where('email', $email)->get();
+        }
 
         return view('questions.my-questions', [
-            'questions' => $questions
+            'questions' => $questions,
+            'email' => $email,
         ]);
     }
 
     public function view(Request $request)
     {
-        $question = Question::find($request->segment(2));
+        $question = Question::find($request->id);
 
         if (!$question) abort(404);
 
@@ -71,6 +82,8 @@ class QuestionsController extends Controller
             'question_id' => $question->id,
             'tag_id' => 1
         ]);
+
+        Cookie::queue('email', $request->input('email'), 10 * 365 * 24 * 60);
 
         session()->flash('success', 'Uw vraag is gesteld. Onze vrijwilligers zullen uw vraag zo snel mogelijk beantwoorden!');
         return redirect(route('question.view', ['id' => $question->id]));

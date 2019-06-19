@@ -4,10 +4,10 @@ Route::group(['prefix' => '/'], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/mijn-vragen', 'QuestionsController@myQuestions')->name('question.mine');
     Route::group(['prefix' => '/vragen'], function () {
-        Route::get('/', 'QuestionsController@index')->middleware('auth')->name('question');
+        Route::get('/', 'QuestionsController@index')->middleware(['auth.admin', 'auth.verified'])->name('question');
         Route::post('/nieuw', 'QuestionsController@store')->name('question.store');
-        Route::post('/sluiten/{id}', 'QuestionsController@close')->middleware('auth')->name('question.close');
-        Route::post('/verwijderen', 'QuestionsController@delete')->middleware('auth.admin')->name('question.delete');
+        Route::post('/sluiten/{id}', 'QuestionsController@close')->middleware(['auth.admin', 'auth.verified'])->name('question.close');
+        Route::post('/verwijderen', 'QuestionsController@delete')->middleware(['auth.admin', 'auth.verified'])->name('question.delete');
         Route::get('/{id}', 'QuestionsController@view')->name('question.view');
     });
     Route::group(['prefix' => '/antwoorden'], function () {

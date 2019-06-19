@@ -17,7 +17,7 @@ class Question extends Model
 
     public function getAnswers()
     {
-        return $this->hasManyThrough('App\Models\Answer', 'App\Models\QuestionAnswer', 'question_id', 'id', 'id', 'id')->get();
+        return $this->hasManyThrough('App\Models\Answer', 'App\Models\QuestionAnswer', 'question_id', 'id', 'id', 'answer_id')->get();
     }
 
     public function getRawTag()

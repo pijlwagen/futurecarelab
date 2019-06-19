@@ -6,7 +6,7 @@
             <p>Typ uw email adres om uw vragen te zien</p>
             <div class="form-group row">
                 <div class="col-md-9 mb-3">
-                    <input type="email" name="email" id="email" placeholder="voorbeeld@domein.nl" class="form-control" value="{{ Request::query('email') }}">
+                    <input type="email" name="email" id="email" placeholder="voorbeeld@domein.nl" class="form-control" value="{{ $email }}">
                 </div>
                 <div class="col-md-3">
                     <button class="btn btn-primary w-100">Zoeken</button>

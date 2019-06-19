@@ -41,4 +41,9 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\Role', 'id', 'role')->first()->name === 'admin';
     }
+
+    public function isVerified()
+    {
+        return !!($this->verified === 1);
+    }
 }

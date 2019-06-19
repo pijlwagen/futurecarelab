@@ -4,8 +4,9 @@
     <div class="container">
         <form action="">
             <div class="form-group row">
-                <div class="col-md-9">
-                    <select name="categorie" class="form-control">
+                <div class="col-md-8 mb-3">
+                    <select name="categorie" class="form-control" required>
+                        <option disabled selected>Selecteer een categorie</option>
                         @foreach(\App\Models\Category::all() as $cat)
                             @if($cat->name === Request::query('categorie'))
                                 <option value="{{ $cat->name }}" selected>{{ $cat->name }}</option>
@@ -15,8 +16,11 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2 mb-3">
                     <button class="btn btn-primary w-100">Filteren</button>
+                </div>
+                <div class="col-md-2 mb-3">
+                    <a href="{{ route('question') }}" class="btn btn-primary w-100">Reset</a>
                 </div>
             </div>
         </form>
