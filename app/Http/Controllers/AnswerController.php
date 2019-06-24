@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ReplyNotification;
 use App\Models\Answer;
 use App\Models\Question;
 use Illuminate\Support\Facades\Auth;
 use App\Models\QuestionAnswer;
 use App\Models\QuestionTag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class AnswerController extends Controller
 {
@@ -15,7 +17,6 @@ class AnswerController extends Controller
     {
 
         $question = Question::find($request->question);
-
         if (!$question) abort(404);
 
         $request->validate([
@@ -31,6 +32,8 @@ class AnswerController extends Controller
             'question_id' => $question->id,
             'answer_id' => $answer->id,
         ]);
+
+        Mail::to($question->email)->send(new ReplyNotification($question));
 
         return back();
     }

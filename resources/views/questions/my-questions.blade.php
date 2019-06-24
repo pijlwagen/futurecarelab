@@ -25,7 +25,7 @@
             @foreach($questions as $question)
                 <tr>
                     <td>{{ $question->id }}</td>
-                    <td>{{ $question->getCategory()->name }}</td>
+                    <td>{{ $question->getCategory()->name ?? 'Cat. is verwijderd' }}</td>
                     <td>{{ $question->getTag()->name }}</td>
                     <td>{{ $question->created_at }}</td>
                     <td><a href="{{ route('question.view', ['id' => $question->id]) }}">Bekijken</a></td>

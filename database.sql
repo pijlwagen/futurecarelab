@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 19, 2019 at 09:11 AM
+-- Generation Time: Jun 23, 2019 at 03:51 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -39,6 +39,20 @@ CREATE TABLE `answers` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `blocked_users`
+--
+
+CREATE TABLE `blocked_users` (
+  `id` int(11) NOT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `reason` varchar(256) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `categories`
 --
 
@@ -55,8 +69,11 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `hex`, `created_at`, `updated_at`) VALUES
-(1, 'Algemeen', '#e5e5e5', '2019-06-12 08:29:20', NULL),
-(2, 'Bloemen', '#4286f4', '2019-06-14 11:07:01', NULL);
+(1, 'Algemeen', '#ff8000', '2019-06-12 08:29:20', '2019-06-23 11:04:17'),
+(2, 'Tuinieren', '#00ff00', '2019-06-14 11:07:01', '2019-06-23 11:12:58'),
+(4, 'Musea', '#ffff00', '2019-06-23 11:12:13', '2019-06-23 11:12:13'),
+(5, 'Spelletjes', '#80ffff', '2019-06-23 11:12:33', '2019-06-23 11:12:33'),
+(6, 'Nieuws', '#0000ff', '2019-06-23 11:12:44', '2019-06-23 11:13:55');
 
 -- --------------------------------------------------------
 
@@ -113,21 +130,6 @@ CREATE TABLE `question_categories` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `question_categories`
---
-
-INSERT INTO `question_categories` (`id`, `question_id`, `category_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 2, '2019-06-17 07:48:12', '2019-06-17 07:48:12'),
-(2, 2, 1, '2019-06-17 07:53:33', '2019-06-17 07:53:33'),
-(3, 3, 2, '2019-06-19 04:54:43', '2019-06-19 04:54:43'),
-(4, 4, 1, '2019-06-19 05:00:12', '2019-06-19 05:00:12'),
-(5, 5, 1, '2019-06-19 05:03:01', '2019-06-19 05:03:01'),
-(6, 6, 1, '2019-06-19 05:03:29', '2019-06-19 05:03:29'),
-(7, 7, 1, '2019-06-19 05:04:02', '2019-06-19 05:04:02'),
-(8, 8, 1, '2019-06-19 05:04:51', '2019-06-19 05:04:51'),
-(9, 9, 1, '2019-06-19 05:07:37', '2019-06-19 05:07:37');
-
 -- --------------------------------------------------------
 
 --
@@ -141,21 +143,6 @@ CREATE TABLE `question_tags` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `tag_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `question_tags`
---
-
-INSERT INTO `question_tags` (`id`, `question_id`, `created_at`, `updated_at`, `tag_id`) VALUES
-(1, 1, '2019-06-17 07:48:12', '2019-06-17 07:54:29', 2),
-(2, 2, '2019-06-17 07:53:33', '2019-06-17 07:54:17', 3),
-(3, 3, '2019-06-19 04:54:43', '2019-06-19 04:54:43', 1),
-(4, 4, '2019-06-19 05:00:12', '2019-06-19 05:00:12', 1),
-(5, 5, '2019-06-19 05:03:01', '2019-06-19 05:03:01', 1),
-(6, 6, '2019-06-19 05:03:29', '2019-06-19 05:03:29', 1),
-(7, 7, '2019-06-19 05:04:02', '2019-06-19 05:04:02', 1),
-(8, 8, '2019-06-19 05:04:51', '2019-06-19 05:04:51', 1),
-(9, 9, '2019-06-19 05:07:37', '2019-06-19 05:07:37', 1);
 
 -- --------------------------------------------------------
 
@@ -225,8 +212,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role`, `verified`) VALUES
-(1, 'Michel Bunschoten', 'noreply@michel3951.com', NULL, '$2y$10$CAUXi/Io8JZ0HM4P85jtPOA3DtE6AETqnsXm9l4LGtcLOQR5Viuxe', NULL, '2019-05-23 09:42:47', '2019-05-23 09:42:47', 2, 0),
-(2, 'Vrijwilliger', 'bullshit@michel3951.com', NULL, '$2y$10$X09okqVwGMh.NcOJ3WitxeArygiTZTblaCDuFU4EvAeMkw9RoH7wm', NULL, '2019-06-14 07:06:40', '2019-06-14 07:06:40', 1, 0);
+(1, 'Michel Bunschoten', 'noreply@michel3951.com', NULL, '$2y$10$CAUXi/Io8JZ0HM4P85jtPOA3DtE6AETqnsXm9l4LGtcLOQR5Viuxe', NULL, '2019-05-23 09:42:47', '2019-05-23 09:42:47', 2, 1),
+(2, 'Vrijwilliger', 'bullshit@michel3951.com', NULL, '$2y$10$X09okqVwGMh.NcOJ3WitxeArygiTZTblaCDuFU4EvAeMkw9RoH7wm', NULL, '2019-06-14 07:06:40', '2019-06-23 07:14:45', 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -236,6 +223,12 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 -- Indexes for table `answers`
 --
 ALTER TABLE `answers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `blocked_users`
+--
+ALTER TABLE `blocked_users`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -308,10 +301,16 @@ ALTER TABLE `answers`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `blocked_users`
+--
+ALTER TABLE `blocked_users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -335,13 +334,13 @@ ALTER TABLE `question_answers`
 -- AUTO_INCREMENT for table `question_categories`
 --
 ALTER TABLE `question_categories`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `question_tags`
 --
 ALTER TABLE `question_tags`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `roles`

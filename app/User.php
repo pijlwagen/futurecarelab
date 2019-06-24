@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Models\BlockedUser;
+use App\Models\Role;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -16,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'verified'
     ];
 
     /**
@@ -42,8 +44,18 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\Role', 'id', 'role')->first()->name === 'admin';
     }
 
+    public function getRole()
+    {
+        return $this->hasOne(Role::class, 'id', 'role')->first();
+    }
+
     public function isVerified()
     {
         return !!($this->verified === 1);
+    }
+
+    public function isBlocked()
+    {
+        return $this->hasOne(BlockedUser::class, 'user_id', 'id')->first();
     }
 }

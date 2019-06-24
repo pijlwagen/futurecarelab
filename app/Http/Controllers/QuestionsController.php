@@ -18,7 +18,7 @@ class QuestionsController extends Controller
         if ($request->query('categorie')) {
             $category = Category::where('name', $request->query('categorie'))->first();
             if (!$category) return abort(404);
-            $questions = $category->getQuestions(true);
+            $questions = $category->getQuestions();
         } else {
             $questions = Question::where('status', 1)->paginate(5);
         }
@@ -123,6 +123,7 @@ class QuestionsController extends Controller
         if (!$question) abort(404);
 
         $tag = $question->getRawTag();
+        $question->getRawCategory()->delete();
 
         foreach ($question->getAnswers() as $answer) {
             $answer->getRawRelation()->delete();

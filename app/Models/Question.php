@@ -22,7 +22,12 @@ class Question extends Model
 
     public function getRawTag()
     {
-        return $this->hasOne('App\Models\QuestionTag', 'question_id', 'id')->first();
+        return $this->hasOne('App\Models\QuestionTag', 'question_id', 'id');
+    }
+
+    public function getRawCategory()
+    {
+        return $this->hasOne('App\Models\QuestionCategory', 'question_id', 'id');
     }
 
     public function getTag()
@@ -32,6 +37,6 @@ class Question extends Model
 
     public function getCategory()
     {
-        return $this->hasOneThrough('App\Models\Category', 'App\Models\QuestionCategory', 'question_id', 'id', 'id', 'category_id')->first();
+        return $this->hasOneThrough(Category::class, QuestionCategory::class, 'question_id', 'id', 'id', 'category_id')->first();
     }
 }

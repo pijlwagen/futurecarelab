@@ -10,12 +10,15 @@ class Category extends Model
 
     protected $fillable = ['hex', 'name'];
 
-    public function getQuestions($open = false)
+    public function getQuestions()
     {
-        if ($open) {
-            return $this->hasManyThrough('App\Models\Question', 'App\Models\QuestionCategory', 'category_id', 'id', 'id', 'question_id')->where('status', 1)->paginate(10);
-        } else {
-            return $this->hasManyThrough('App\Models\Question', 'App\Models\QuestionCategory', 'category_id', 'id', 'id', 'question_id')->paginate(10);
-        }
+//        return $this->hasManyThrough('App\Models\Question', 'App\Models\QuestionCategory', 'category_id', 'id', 'id', 'question_id')->where('status', 1)->paginate(10);
+//        return $this->belongsToMany(Question::class, 'question_categories', 'category_id', 'question_id')->where('status', 1)->paginate(10);
+        return $this->hasManyThrough(Question::class, QuestionCategory::class, 'category_id', 'id', 'id', 'question_id')->where('status', 1)->paginate();
+    }
+
+    public function getRelationShips()
+    {
+        return $this->hasMany(QuestionCategory::class, 'category_id', 'id');
     }
 }
