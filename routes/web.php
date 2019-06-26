@@ -10,6 +10,10 @@ Route::group(['prefix' => '/'], function () {
         Route::post('/verwijderen', 'QuestionsController@delete')->middleware(['auth', 'auth.verified'])->name('question.delete');
         Route::get('/{id}', 'QuestionsController@view')->name('question.view');
     });
+    Route::group(['prefix' => '/mijn-account', 'middleware' => ['auth']], function () {
+        Route::get('/', 'AccountController@index')->name('account.index');
+        Route::post('/', 'AccountController@update');
+    });
     Route::group(['prefix' => '/antwoorden', 'middleware' => ['auth', 'blockade']], function () {
         Route::post('/nieuw/{question}', 'AnswerController@store')->middleware(['auth', 'auth.verified'])->name('answer.store');
         Route::post('/verwijderen', 'AnswerController@delete')->middleware('auth.admin')->name('answer.delete');
